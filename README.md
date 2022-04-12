@@ -1,4 +1,4 @@
-# Tasks repo
+# Tasks and plans repo
 Project plans and project structure goes here. Everything described below is a subject to change.
 ## Database Structure
 This section describes to database looks like. Right now we are using Postgres. Although we might use MongoDB or Redis for some cases in the future.
