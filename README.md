@@ -49,8 +49,11 @@ Communications such as messages and calls are stored in this database.
   "type": enum // e.g. dialog, group
 }
 // MESSAGE
-// note: message data can contain anything from plain text to an image reference (images are stored in File storage)
-// note: messages are only deleted in secret chats. They are marked as deleted otherwise. This is done to slow down database defragmentation and improve performance.
+// note: message data can contain anything from plain text 
+// to an image reference (images are stored in File storage)
+// note: messages are only deleted in secret chats. They are marked as 
+// deleted otherwise. This is done to slow down database defragmentation 
+// and improve performance.
 {
   "id": ...,
   "room_id": ...,
@@ -64,7 +67,8 @@ Communications such as messages and calls are stored in this database.
   "status": enum // e.g. sent, deleted, edited
 }
 // USER : ROOM (many to many)
-// note: we do not store users in room data because it may cause a huge performance hit when a room has many users
+// note: we do not store users in room data because it may cause 
+// a huge performance hit when a room has many users
 {
   "user_id": ...,
   "chat_id": ...,
@@ -78,7 +82,9 @@ Communications such as messages and calls are stored in this database.
 Stores files and associated information such as upload date and owner. Actual files are stored on the disk and database is used for storing the metadata.
 ```json
 // FILE
-// note: when forwarding a message a new file record referencing the old file will be created. This way if sender deletes the message file will still be accessible on the forwarded one
+// note: when forwarding a message a new file record referencing 
+// the old file will be created. This way if sender deletes 
+// the message file will still be accessible on the forwarded one
 {
   "id": ...,
   "owner": ...,
