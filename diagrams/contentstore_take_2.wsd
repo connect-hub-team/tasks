@@ -1,0 +1,66 @@
+@startuml contentstore take 2
+
+header "Second take on file store architecture"
+
+actor client as client
+
+participant "REST API" as api #Gainsboro
+database "POSTGRES" as pg #Cyan
+
+participant "NODE 1" as n1 #LightGreen
+
+participant "NODE 2" as n2 #Pink
+
+group Download
+    group File is cached on server
+        client --> api : request file
+        api --> pg : ask file location
+        pg -> api : [located on server]
+        api -> client : file
+    end
+    
+    group File is stored on node
+        client --> api : request file
+        api --> pg : ask file location
+        pg -> api : [located on node 1]
+
+
+        note over n1 #LightGreen
+            node 1 does not have a static IP address
+        end note
+        api --> n1 : proxy file request via SSH
+        n1 -> api : stream file
+        api -> client : forward stream to client
+    end
+end
+
+newpage
+
+group Upload
+    client --> api : upload file
+    api --> pg : save file information
+    api -> api : cache file
+    note right
+        files will be sent to nodes by 
+        a **background job**
+    end note
+    api -> client : file id
+end
+
+group Background job [around once an hour]
+    api -> pg : query rarely used files
+    pg --> api 
+
+    note over n1, n2 #GhostWhite
+        node priority calculated based on factors like
+        - free space
+        - configured priority factor
+        - network speed and latency 
+    end note
+    n1 --> api : has free space
+    n2 --> api : low priority and running out of space
+
+    api -> n1 : move rarely used files
+    n2 -> api : send files to cache
+end
+@enduml

@@ -78,7 +78,7 @@ Communications such as messages and calls are stored in this database.
 }
 ```
 
-### File storage
+### Content store
 Stores files and associated information such as upload date and owner. Actual files are stored on the disk and database is used for storing the metadata.
 ```json
 // FILE
@@ -104,3 +104,27 @@ Stores files and associated information such as upload date and owner. Actual fi
   },
 }
 ```
+
+## Logic
+
+### Content store
+
+The server has little storage space so additional nodes are used to store files
+
+Problems with nodes
+- Node might not have a static ip address
+- Node might have a slow connection
+
+Solution 
+- Use ssh to proxy connections to nodes
+- Cache frequently used files on the server
+
+#### File download
+When downloading a file server first check the cache. If file is present, it is send back. Otherwise request is forwarded to a node that has the file.
+
+![File download](img/contentstore%20take%201-page1.png)
+
+#### File upload
+All uploaded files are stored in cache at first. A file can be moved to a node if server is running out of space.
+
+![File upload](img/contentstore%20take%201.png)
