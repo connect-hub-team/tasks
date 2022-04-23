@@ -122,9 +122,9 @@ Solution
 #### File download
 When downloading a file server first check the cache. If file is present, it is send back. Otherwise request is forwarded to a node that has the file.
 
-![File download](img/contentstore%20take%201-page1.png)
+![File download](img/contentstore%20take%202-page1.png)
 
 #### File upload
 All uploaded files are stored in cache at first. A file can be moved to a node if server is running out of space.
 
-![File upload](img/contentstore%20take%201.png)
+![File upload](img/contentstore%20take%202-page2.png)
